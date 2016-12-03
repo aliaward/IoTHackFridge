@@ -5,7 +5,7 @@
       "projectTypeName": "com.intel.xdk.projecttype.jsapp",
       "src": "jsapp/sample-iot-companion-touch-notifier/sample.zip",
       "projectGuid": "6e92bb04-71b3-42d9-8eec-aeb9801484c2",
-      "lastModifiedDate": 1480802153170,
+      "lastModifiedDate": 1480802432285,
       "creationDate": 1480802136084
     },
     "sourceDirectory": "www",
