@@ -11,8 +11,8 @@
   "iot-tab": {
     "fileStatus": {
       ".gitignore": {
-        "previousModTime": 1480802364000,
-        "modified": 1480802364000,
+        "previousModTime": 1480804513000,
+        "modified": 1480804513000,
         "seen": true,
         "name": ".gitignore"
       },
@@ -23,8 +23,8 @@
         "name": "IoTTouchDevice.xdk"
       },
       "IoTTouchDevice.xdke": {
-        "previousModTime": 1480803869000,
-        "modified": 1480803869000,
+        "previousModTime": 1480807579000,
+        "modified": 1480807579000,
         "seen": true,
         "name": "IoTTouchDevice.xdke"
       },
@@ -47,8 +47,8 @@
         "name": "icon.png"
       },
       "main.js": {
-        "previousModTime": 1480803894000,
-        "modified": 1480803894000,
+        "previousModTime": 1480807611000,
+        "modified": 1480807611000,
         "seen": true,
         "name": "main.js"
       },
@@ -66,23 +66,8 @@
       }
     },
     "boardFileStatus": {
-      "LICENSE.md": {
-        "previousModTime": 1480804037202
-      },
-      "README.md": {
-        "previousModTime": 1480804037202
-      },
-      "icon.png": {
-        "previousModTime": 1480804037202
-      },
       "main.js": {
-        "previousModTime": 1480804037202
-      },
-      "package.json": {
-        "previousModTime": 1480804037202
-      },
-      "xdk/project-info.json": {
-        "previousModTime": 1480804037202
+        "previousModTime": 1480807617612
       }
     }
   }
