@@ -13,9 +13,9 @@ Function: validateIP()
 Parameter: none
 Description: Attempt to connect to server/Intel IoT platform
 */
-$(document).ready(function(){
-    validateIP();
-});
+
+
+validateIP();
 
 function validateIP() {
     'use strict';
@@ -46,7 +46,7 @@ function validateIP() {
         try {
             //Connect to Server
             socket = io.connect("http://" + ip_addr + ":" + port);
-
+            
             //Attach a 'connected' event handler to the socket
             socket.on("connected", function (message) {
 //                navigator.notification.alert(

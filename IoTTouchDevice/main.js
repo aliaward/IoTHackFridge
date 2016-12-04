@@ -27,6 +27,8 @@ var groveSensor = require('jsupm_grove');
 //Create Socket.io server
 var http = require('http');
 
+var moment = require('moment');
+
 var B = 3975;
 
 // Create the light sensor object using AIO pin 0
@@ -49,24 +51,65 @@ var milk;
 
 var Food = function(name){
     this.name = name;
-    this.dateAdded ;
+    this.dateAdded = moment();
+    this.dateAddedStr = moment().format('MMM DD, YYYY');
     this.open = false;
     this.daysOpened = 0;
     this.expiration;
-    this.status = 'BAD';
-    this.daysLeft = 10;
+    this.status = 'ON';
+    this.daysLeft;
+    this.message;
+}    
+    
+
+Food.prototype.updateExpiration = function() {
+    var today = moment();
+    var week = moment.duration(1, 'week');
+
+    if (this.status === 'ON') {
+        if (!this.expiration) {
+            this.expiration = today + 4 * week;
+        }
+    } else if (this.expiration > today + week) {
+        this.expiration = today + week;
+    }
+    this.updateDates();
+};
+
+Food.prototype.generateDaysLeft = function() {
+    if (this.expiration) {
+        return this.daysLeft = Math.floor(moment.duration(this.expiration - moment()).asDays());
+    }
+};
+
+Food.prototype.generateMessage = function() {
+    var dayMsg = moment.duration(this.daysLeft, 'days').humanize()
+    if (this.daysLeft > 0) {
+        return this.message = this.name + ' expires in ' + dayMsg;
+    } else if (this.daysLeft < 0) {
+        return this.message = this.name + ' expired' + dayMsg;
+    } else if (this.daysLeft === 0) {
+        return this.message = this.name + ' expires today';
+    }
 }
 
-function updateExpiration () {
-    var today = Date.now();
-    var week = 7 * 24 * 60 * 60 * 1000;
+Food.prototype.generateDaysOpened = function() {
+    return this.daysOpened = Math.floor(moment.duration(
+        moment() - this.dateAdded
+    ).asDays());
+}
 
-    if (milk.status === 'ON') {
-        if (!milk.expiration) {
-            milk.expiration = today + 4 * week;
-        }
-    } else if (milk.expiration > today + week) {
-        milk.expiration = today + week;
+Food.prototype.updateDates = function() {
+    // update days left and expiration message and days opened
+    this.generateDaysLeft();
+    this.generateMessage();
+    this.generateDaysOpened();
+}
+
+Food.prototype.updateStatus = function(){
+    this.updateDates();
+    if (this.daysLeft < 0){
+        this.status = 'BAD';
     }
 }
 
@@ -177,7 +220,7 @@ var myAnalogPin = new mraa.Aio(0);
 function startTempWatch(socket) {
     'use strict';
     
-    
+    console.log('start temp watch');
     
     var inFridge = function(){
         return fahrenheit_temperature > 60;
@@ -189,12 +232,13 @@ function startTempWatch(socket) {
     if (inFridge() && !milk){
         milk = new Food('milk');
         milk.dateAdded = Date.now();
-        updateExpiration();
+        milk.updateExpiration();
         console.log(milk);
         socket.emit("foodAdded", milk);
     } else if (outOfFridge() && milk.status){
         milk.status = '0PEN';
-        updateExpiration();
+        milk.updateExpiration();
+        socket.emit("foodUpdated", milk);
     };
     
     setInterval(readLightSensorValue, 10000);

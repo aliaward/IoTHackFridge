@@ -9,9 +9,7 @@
   "license": "BSD-3-Clause",
   "private": true,
   "dependencies": {
-    "socket.io": "latest"
-  },
-  "devDependencies": {
+    "socket.io": "latest",
     "moment": "^2.17.0"
   }
 }
