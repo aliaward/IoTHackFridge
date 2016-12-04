@@ -80,6 +80,7 @@ setInterval(readLightSensorValue, 10000);
 var blueLED = new groveSensor.GroveLed(5);
 var redLED = new groveSensor.GroveLed(7);
 var greenLED = new groveSensor.GroveLed(8);
+
 function turnLightOn(status){
     switch(status) {
         case "unopened":
