@@ -13,13 +13,17 @@ Function: validateIP()
 Parameter: none
 Description: Attempt to connect to server/Intel IoT platform
 */
+$(document).ready(function(){
+    validateIP();
+});
+
 function validateIP() {
     'use strict';
     var socket,
-    //Get values from text fields
-        ip_addr = $("#ip_address").val(),
-        port = $("#port").val(),
-        script = document.createElement("script");
+    //Values for our Edison Board
+    ip_addr = "10.232.205.228",
+    port = "1337",
+    script = document.createElement("script");
 
     //create script tag for socket.io.js file located on your IoT platform (development board)
     script.setAttribute("src", "http://" + ip_addr + ":" + port + "/socket.io/socket.io.js");
@@ -59,28 +63,23 @@ function validateIP() {
             $.ui.loadContent("#main", false, false, "fade");
 
             socket.on("foodAdded", function (message) {
-                //alert("Is anyone there? "+message);
-//                if (message === "present") {
-                    console.log(message);
-                    $('#name').html(message.name);
-                    $('#dateAdded').html(formatDate(message.dateAdded));
-                    $('#status').html(message.status);
-                    $('#daysToUse').html(daysLeft(message.expiration));
-//                    $("#notifier_circle").attr("class", "green");
-//                    //Update log
-//                    $("#feedback_log").append(Date().substr(0, 21) + " Someone is Present!<br>");
-//                    //Prompt user with Cordova notification alert
-//                    navigator.notification.alert(
-//                        'Someone is Present!',  // message
-//                        "",                     // callback
-//                        'Check Your Door',            // title
-//                        'Ok'                  // buttonName
-//                    );
-//                    //Wait 2 seconds then turn back to gray
-//                    setTimeout(function () {
-//                        $("#notifier_circle").attr("class", "gray");
-//                    }, 3000);
-//                }
+                $('.food').removeClass('hidden');
+                $('.no-food-message').addClass('hidden');
+                console.log(message);
+                $('#name').html(message.name);
+                $('#dateAdded').html(formatDate(message.dateAdded));
+                $('#status').html(message.status);
+                $('#daysToUse').html(daysLeft(message.expiration));
+            });
+            
+            socket.on("foodUpdated", function (message) {
+               if (message.daysToUse < 3){
+                   $('.alert-warning').removeClass('hidden').html(message.message);
+               } else if (message.status === 'BAD'){
+                   $('.alert-warning').addClass('hidden');
+                   $('.alert-danger').removeClass('hidden');
+                   $('#expiredName').html(message.name);
+               }
             });
         } catch (e) {
             navigator.notification.alert(

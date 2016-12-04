@@ -13,11 +13,12 @@
     <!--  jQuery  -->
     <script src="lib/jquery/jquery-2.1.1.js"></script>
     <!--  App Framework  -->
-    <link rel="stylesheet" type="text/css" href="lib/appframework/af.ui.css"></link>
+<!--    <link rel="stylesheet" type="text/css" href="lib/appframework/af.ui.css"></link>-->
     <script type="text/javascript" src="lib/appframework/jq.appframework.min.js"></script>
 <!--    <script type="text/javascript" src="lib/appframework/appframework.js"></script>-->
     <script type="text/javascript" charset="utf-8" src="lib/appframework/appframework.ui.min.js"></script>
-
+    <script type="text/javascript" charset="utf-8" src="js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css"></link>
     <link rel="stylesheet" type="text/css" href="css/main.css"></link>
 
     <script src="cordova.js"></script>
@@ -32,6 +33,42 @@
      </script>
 </head>
 <body>
+    <header class="center">
+        Smart Fridge
+    </header>
+    <div class="container-fluid">
+        <div class="no-food-message alert alert-warning">
+            <p>You have no food in your fridge. Add food to your fridge to get started.</p>
+        </div>
+        <div class="alert alert-warning">
+            <p>You're food is expiring in <span id="alertDaysToUse"></span> days. Use it soon!</p>
+        </div>
+        <div class="alert alert-danger">
+            <p>You're food has expired!</p>
+        </div>
+        <div class="food panel hidden">
+            <div class="panel-heading">
+                <h3 id="name"></h3>
+            </div>
+            <div class="panel-body">
+                <table class="table">
+                    <tr>
+                        <th>Date Added:</th>
+                        <td id="dateAdded"></td>
+                    </tr>
+                    <tr>
+                        <th>Status:</th>
+                        <td id="status"></td>
+                    </tr>
+                    <tr>
+                        <th>Days To Use:</th>
+                        <td id="daysToUse"></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+<!--
     <div id="afui">
 
         <div id="content">
@@ -77,6 +114,7 @@
             </div>
         </div>
     </div>
+-->
 </body>
 <script type="text/javascript" src="js/main.js"></script>
 </html>
