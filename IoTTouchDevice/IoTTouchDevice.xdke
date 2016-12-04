@@ -23,8 +23,8 @@
         "name": "IoTTouchDevice.xdk"
       },
       "IoTTouchDevice.xdke": {
-        "previousModTime": 1480815547681,
-        "modified": 1480815547681,
+        "previousModTime": 1480824578331,
+        "modified": 1480824578331,
         "seen": true,
         "name": "IoTTouchDevice.xdke"
       },
@@ -47,8 +47,8 @@
         "name": "icon.png"
       },
       "main.js": {
-        "previousModTime": 1480815608035,
-        "modified": 1480815608035,
+        "previousModTime": 1480824755049,
+        "modified": 1480824755049,
         "seen": true,
         "name": "main.js"
       },
@@ -66,8 +66,23 @@
       }
     },
     "boardFileStatus": {
+      "LICENSE.md": {
+        "previousModTime": 1480824788801
+      },
+      "README.md": {
+        "previousModTime": 1480824788801
+      },
+      "icon.png": {
+        "previousModTime": 1480824788801
+      },
       "main.js": {
-        "previousModTime": 1480815609123
+        "previousModTime": 1480824788801
+      },
+      "package.json": {
+        "previousModTime": 1480824788801
+      },
+      "xdk/project-info.json": {
+        "previousModTime": 1480824788801
       }
     }
   }

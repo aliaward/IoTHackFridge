@@ -24,15 +24,38 @@ var mraa = require("mraa");
 
 var Food = function(name){
     this.name = name;
-    this.dateAdded;
+    this.dateAdded ;
     this.open = false;
     this.daysOpened = 0;
-    this.expiration;
-    this.status;
+    this.expiration = new Date();
+    this.status = 'UNOPENED';
+    this.daysLeft = 10;
 }
 
 var milk = new Food('milk');
 
+var jsUpmI2cLcd  = require ('jsupm_i2clcd');
+var lcd = new jsUpmI2cLcd.Jhd1313m1(6, 0x3E, 0x62); // Initialize the LCD
+lcd.setCursor(0,0); // go to the 1st row, 2nd column (0-indexed)
+getFoodColor(milk.status);
+lcd.write("This is " + milk.status + ".");
+lcd.setCursor(1,0);
+lcd.write(milk.daysLeft + " days left."); // print characters to the LCD screen
+function getFoodColor(status){
+    switch(status) {
+        case "UNOPENED":
+            lcd.setColor(0, 0, 255); //blue
+            break;
+        case "OPEN":
+            lcd.setColor(0, 255, 0); //green
+            break;
+        case "BAD":
+            lcd.setColor(255, 0, 0); //red
+            break;
+        default:
+            console.log('no status set')
+    }
+}
 //Begin LED Snippet
 /*
  * Author: Sarah Knepper 
@@ -80,15 +103,16 @@ setInterval(readLightSensorValue, 10000);
 var blueLED = new groveSensor.GroveLed(5);
 var redLED = new groveSensor.GroveLed(7);
 var greenLED = new groveSensor.GroveLed(8);
+
 function turnLightOn(status){
     switch(status) {
-        case "unopened":
+        case "UNOPENED":
             blueLED.on();
             break;
-        case "good":
+        case "OPEN":
             greenLED.on();
             break;
-        case "bad":
+        case "BAD":
             redLED.on();
             break;
         default:
@@ -97,57 +121,20 @@ function turnLightOn(status){
 }
 
 function turnLightOff(status){
-    if(status==='ON'){
-        blueLED.off();
-    }
-    else if(status==='OPEN'){
-        greenLED.off();
-    }
-    else if(status==='WARN'){
-        redLED.off();
-    }
-    else if(status==='BAD'){
-        redLED.off();
+    switch(status) {
+        case "UNOPENED":
+            blueLED.off();
+            break;
+        case "OPEN":
+            greenLED.off();
+            break;
+        case "BAD":
+            redLED.off;
+            break;
+        default:
+            console.log('no status set')
     }
 }
-
-// Print the name
-//console.log(led.name());
-
-// Turn the LED on and off 10 times, pausing one second
-// between transitions
-//var status = 'WARN';
-//var waiting = setInterval(function() {
-//        if ( i % 2 == 0 ) {
-//            blueLED.on();
-//        } else {
-//            blueLED.off();
-//        }
-//        i++;
-//        if ( i == 20 ) clearInterval(waiting);
-//        }, 1000);
-
-var i = 0;
-//var statusSwitch = setInterval(function() {
-//    if(status === 'ON'){
-//        turnLightOff(status);
-//        status = 'OPEN';
-//    }
-//    else if(status === 'OPEN'){
-//        turnLightOff(status);
-//        status = 'WARN';
-//    }
-//    else if(status === 'WARN'){
-//        turnLightOff(status);
-//        status = 'BAD';
-//    }
-//    else if(status === 'BAD'){
-//        turnLightOff(status);
-//        status = 'ON';
-//    }
-//    i++;
-//    if (i===50) clearInterval(statusSwitch);
-//}, 2000);
 
 //End LED Snippet
 //GROVE Kit A0 Connector --> Aio(0)
