@@ -23,10 +23,12 @@ var B = 3975;
 var mraa = require("mraa");
 
 var Food = function(name){
+    this.name = name;
     this.dateAdded;
     this.open = false;
     this.daysOpened = 0;
-    this.name = name;
+    this.expiration;
+    this.status;
 }
 
 var milk = new Food('milk');
@@ -67,10 +69,10 @@ function readLightSensorValue() {
     console.log(light.name() + " raw value is " + light.raw_value() +
             ", which is roughly " + light.value() + " lux");
     if(light.value() > 0){
-        turnLightOn(status);
+        turnLightOn(milk.status);
     }
     else{
-        turnLightOff(status);
+        turnLightOff(milk.status);
     }
 }
 setInterval(readLightSensorValue, 10000);
@@ -79,26 +81,18 @@ var blueLED = new groveSensor.GroveLed(5);
 var redLED = new groveSensor.GroveLed(7);
 var greenLED = new groveSensor.GroveLed(8);
 function turnLightOn(status){
-    var j = 0;
-    if(status==='ON'){
-        blueLED.on();
-    }
-    else if(status==='OPEN'){
-        greenLED.on();
-    }
-    else if (status==='WARN'){
-        setInterval(function() {
-            if(j % 2 === 0){
-                redLED.on();
-            }
-            else{
-                redLED.off();
-            }
-            j++;
-        },1000);
-    }
-    else if(status==='BAD'){
-        redLED.on();
+    switch(status) {
+        case "unopened":
+            blueLED.on();
+            break;
+        case "good":
+            greenLED.on();
+            break;
+        case "bad":
+            redLED.on();
+            break;
+        default:
+            console.log('no status set')
     }
 }
 
@@ -122,7 +116,7 @@ function turnLightOff(status){
 
 // Turn the LED on and off 10 times, pausing one second
 // between transitions
-var status = 'WARN';
+//var status = 'WARN';
 //var waiting = setInterval(function() {
 //        if ( i % 2 == 0 ) {
 //            blueLED.on();
