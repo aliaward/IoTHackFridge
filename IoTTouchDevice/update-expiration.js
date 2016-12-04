@@ -2,9 +2,10 @@ var moment = require('moment');
 
 var Food = function(name){
     this.name = name;
-    this.dateAdded;
+    this.dateAdded = moment();
+    this.dateAddedStr = moment().format('MMM DD, YYYY');
     this.open = false;
-    this.daysOpened = 0;
+    this.daysOpened;
     this.expiration;
     this.status = 'ON';
     this.daysLeft;
@@ -27,9 +28,7 @@ Food.prototype.updateExpiration = function() {
     } else if (this.expiration > today + week) {
         this.expiration = today + week;
     }
-    // update days left and expiration message
-    this.generateDaysLeft();
-    this.generateMessage();
+    this.updateDates();
 };
 
 Food.prototype.generateDaysLeft = function() {
@@ -49,8 +48,24 @@ Food.prototype.generateMessage = function() {
     }
 }
 
+Food.prototype.generateDaysOpened = function() {
+    return this.daysOpened = Math.floor(moment.duration(
+        moment() - this.dateAdded
+    ).asDays());
+}
+
+Food.prototype.updateDates = function() {
+    // update days left and expiration message and days opened
+    this.generateDaysLeft();
+    this.generateMessage();
+    this.generateDaysOpened();
+}
+
+
+
 console.log(1, milk);
 milk.updateExpiration();
+// milk.updateDates();
 // milk.generateDaysLeft();
 // milk.generateMessage();
 
