@@ -11,63 +11,63 @@
   "iot-tab": {
     "fileStatus": {
       ".gitignore": {
-        "previousModTime": 1480804513000,
-        "modified": 1480804513000,
+        "previousModTime": 1480805026951,
+        "modified": 1480805026951,
         "seen": true,
         "name": ".gitignore"
       },
       "IoTTouchDevice.xdk": {
-        "previousModTime": 1480802364000,
-        "modified": 1480802364000,
+        "previousModTime": 1480801937459,
+        "modified": 1480801937459,
         "seen": true,
         "name": "IoTTouchDevice.xdk"
       },
       "IoTTouchDevice.xdke": {
-        "previousModTime": 1480810409000,
-        "modified": 1480810409000,
+        "previousModTime": 1480815547681,
+        "modified": 1480815547681,
         "seen": true,
         "name": "IoTTouchDevice.xdke"
       },
       "LICENSE.md": {
-        "previousModTime": 1480802364000,
-        "modified": 1480802364000,
+        "previousModTime": 1480801937182,
+        "modified": 1480801937182,
         "seen": true,
         "name": "LICENSE.md"
       },
       "README.md": {
-        "previousModTime": 1480802364000,
-        "modified": 1480802364000,
+        "previousModTime": 1480801937180,
+        "modified": 1480801937180,
         "seen": true,
         "name": "README.md"
       },
       "icon.png": {
-        "previousModTime": 1480802364000,
-        "modified": 1480802364000,
+        "previousModTime": 1480801937181,
+        "modified": 1480801937181,
         "seen": true,
         "name": "icon.png"
       },
       "main.js": {
-        "previousModTime": 1480810377000,
-        "modified": 1480810377000,
+        "previousModTime": 1480815608035,
+        "modified": 1480815608035,
         "seen": true,
         "name": "main.js"
       },
       "package.json": {
-        "previousModTime": 1480802364000,
-        "modified": 1480802364000,
+        "previousModTime": 1480801937182,
+        "modified": 1480801937182,
         "seen": true,
         "name": "package.json"
       },
       "xdk/project-info.json": {
-        "previousModTime": 1480802364000,
-        "modified": 1480802364000,
+        "previousModTime": 1480801937363,
+        "modified": 1480801937363,
         "seen": true,
         "name": "xdk/project-info.json"
       }
     },
     "boardFileStatus": {
       "main.js": {
-        "previousModTime": 1480810476800
+        "previousModTime": 1480815609123
       }
     }
   }
