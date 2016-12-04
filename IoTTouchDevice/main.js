@@ -22,6 +22,15 @@
 var B = 3975;
 var mraa = require("mraa");
 
+var Food = function(name){
+    this.dateAdded;
+    this.open = false;
+    this.daysOpened = 0;
+    this.name = 'milk';
+}
+
+var milk = new Food();
+
 //Begin LED Snippet
 /*
  * Author: Sarah Knepper 
@@ -113,6 +122,11 @@ function startSensorWatch(socket) {
         var celsius_temperature = 1 / (Math.log(resistance / 10000) / B + 1 / 298.15) - 273.15;//convert to temperature via datasheet ;
         //console.log("Celsius Temperature "+celsius_temperature); 
         var fahrenheit_temperature = (celsius_temperature * (9 / 5)) + 32;
+        
+        if (fahrenheit_temperature > 70){
+            milk.dateAdded = Date.now();
+            console.log(milk);
+        };
         console.log("Fahrenheit Temperature: " + fahrenheit_temperature);
         socket.emit("message", fahrenheit_temperature);
     }, 500);

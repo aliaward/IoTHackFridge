@@ -23,8 +23,8 @@
         "name": "IoTTouchDevice.xdk"
       },
       "IoTTouchDevice.xdke": {
-        "previousModTime": 1480807579000,
-        "modified": 1480807579000,
+        "previousModTime": 1480810409000,
+        "modified": 1480810409000,
         "seen": true,
         "name": "IoTTouchDevice.xdke"
       },
@@ -47,8 +47,8 @@
         "name": "icon.png"
       },
       "main.js": {
-        "previousModTime": 1480807611000,
-        "modified": 1480807611000,
+        "previousModTime": 1480810377000,
+        "modified": 1480810377000,
         "seen": true,
         "name": "main.js"
       },
@@ -67,7 +67,7 @@
     },
     "boardFileStatus": {
       "main.js": {
-        "previousModTime": 1480807617612
+        "previousModTime": 1480810476800
       }
     }
   }
