@@ -55,29 +55,105 @@ var milk = new Food('milk');
  * OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-
 // Load Grove module
 var groveSensor = require('jsupm_grove');
 
-// Create the Grove LED object using GPIO pin 5
-var led = new groveSensor.GroveLed(5);
+// Create the light sensor object using AIO pin 0
+var light = new groveSensor.GroveLight(1);
+
+// Read the input and print both the raw value and a rough lux value,
+// waiting one second between readings
+function readLightSensorValue() {
+    console.log(light.name() + " raw value is " + light.raw_value() +
+            ", which is roughly " + light.value() + " lux");
+    if(light.value() > 0){
+        turnLightOn(status);
+    }
+    else{
+        turnLightOff(status);
+    }
+}
+setInterval(readLightSensorValue, 10000);
+
+var blueLED = new groveSensor.GroveLed(5);
+var redLED = new groveSensor.GroveLed(7);
+var greenLED = new groveSensor.GroveLed(8);
+function turnLightOn(status){
+    var j = 0;
+    if(status==='ON'){
+        blueLED.on();
+    }
+    else if(status==='OPEN'){
+        greenLED.on();
+    }
+    else if (status==='WARN'){
+        setInterval(function() {
+            if(j % 2 === 0){
+                redLED.on();
+            }
+            else{
+                redLED.off();
+            }
+            j++;
+        },1000);
+    }
+    else if(status==='BAD'){
+        redLED.on();
+    }
+}
+
+function turnLightOff(status){
+    if(status==='ON'){
+        blueLED.off();
+    }
+    else if(status==='OPEN'){
+        greenLED.off();
+    }
+    else if(status==='WARN'){
+        redLED.off();
+    }
+    else if(status==='BAD'){
+        redLED.off();
+    }
+}
 
 // Print the name
-console.log(led.name());
+//console.log(led.name());
 
 // Turn the LED on and off 10 times, pausing one second
 // between transitions
+var status = 'WARN';
+//var waiting = setInterval(function() {
+//        if ( i % 2 == 0 ) {
+//            blueLED.on();
+//        } else {
+//            blueLED.off();
+//        }
+//        i++;
+//        if ( i == 20 ) clearInterval(waiting);
+//        }, 1000);
+
 var i = 0;
-var waiting = setInterval(function() {
-        if ( i % 2 == 0 ) {
-            led.on();
-        } else {
-            led.off();
-        }
-        i++;
-        if ( i == 20 ) clearInterval(waiting);
-        }, 1000);
-            
+//var statusSwitch = setInterval(function() {
+//    if(status === 'ON'){
+//        turnLightOff(status);
+//        status = 'OPEN';
+//    }
+//    else if(status === 'OPEN'){
+//        turnLightOff(status);
+//        status = 'WARN';
+//    }
+//    else if(status === 'WARN'){
+//        turnLightOff(status);
+//        status = 'BAD';
+//    }
+//    else if(status === 'BAD'){
+//        turnLightOff(status);
+//        status = 'ON';
+//    }
+//    i++;
+//    if (i===50) clearInterval(statusSwitch);
+//}, 2000);
 
 //End LED Snippet
 //GROVE Kit A0 Connector --> Aio(0)
