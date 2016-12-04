@@ -27,12 +27,27 @@ var Food = function(name){
     this.dateAdded ;
     this.open = false;
     this.daysOpened = 0;
-    this.expiration = new Date();
+    this.expiration;
     this.status = 'UNOPENED';
     this.daysLeft = 10;
 }
 
-var milk = new Food('milk');
+var milk;
+
+function updateExpiration (food) {
+    var today = Date.now();
+    var week = 7 * 24 * 60 * 60 * 1000;
+
+    if (food.status === 'ON') {
+        if (!food.expiration) {
+            food.expiration = today + 4 * week;
+        }
+    } else if (food.expiration > today + week) {
+        food.expiration = today + week;
+    }
+}
+
+
 
 var jsUpmI2cLcd  = require ('jsupm_i2clcd');
 var lcd = new jsUpmI2cLcd.Jhd1313m1(6, 0x3E, 0x62); // Initialize the LCD
@@ -169,7 +184,11 @@ function startSensorWatch(socket) {
             digital_pin_D6.write(touch_sensor_value);
         }
         last_t_sensor_value = touch_sensor_value;
-        //Temperature sensor
+
+        
+    }, 500);
+    
+            //Temperature sensor
         var a = myAnalogPin.read();
         console.log("Analog Pin (A0) Output: " + a);
         //console.log("Checking....");
@@ -180,15 +199,24 @@ function startSensorWatch(socket) {
         //console.log("Celsius Temperature "+celsius_temperature); 
         var fahrenheit_temperature = (celsius_temperature * (9 / 5)) + 32;
         
-        if (fahrenheit_temperature > 60){
+        var inFridge = function(){
+            return fahrenheit_temperature > 60;
+        }
+        
+        var outOfFridge = function(){
+            return fahrenheit_temperature > 80;
+        }
+        if (inFridge() && !milk){
+            milk = new Food('milk');
             milk.dateAdded = Date.now();
+            updateExpiration(milk);
             console.log(milk);
+        } else if (outOfFridge() && milk.status){
+            milk.status = '0PEN';
+            updateExpiration(milk);
         };
         console.log("Fahrenheit Temperature: " + fahrenheit_temperature);
         socket.emit("foodAdded", milk);
-        
-    }, 500);
-    
     
 }
 

@@ -25,6 +25,18 @@ function validateIP() {
     script.setAttribute("src", "http://" + ip_addr + ":" + port + "/socket.io/socket.io.js");
     document.head.appendChild(script);
     
+    function daysLeft(expiration){
+        var oneDay = 24*60*60*1000; // hours*minutes*seconds*milliseconds
+        var firstDate = new Date(expiration);
+        var secondDate = Date.now();
+        console.log(Math.round(Math.abs(firstDate - secondDate)/(oneDay)));
+        return Math.round(Math.abs(firstDate - secondDate)/(oneDay));
+    }
+    
+//    function formatDate(date){
+//        date = new Date(date);
+//        return ((date.getMonth() + 1) + '/' + date.getDate() + '/' +  date.getFullYear());
+//    }
     //Wait 1 second before connecting
     setTimeout(function () {
         try {
@@ -49,8 +61,11 @@ function validateIP() {
             socket.on("foodAdded", function (message) {
                 //alert("Is anyone there? "+message);
 //                if (message === "present") {
+                    console.log(message);
                     $('#name').html(message.name);
-                    $('#dateAdded').html(message.dateAdded);
+                    $('#dateAdded').html(formatDate(message.dateAdded));
+                    $('#status').html(message.status);
+                    $('#daysToUse').html(daysLeft(message.expiration));
 //                    $("#notifier_circle").attr("class", "green");
 //                    //Update log
 //                    $("#feedback_log").append(Date().substr(0, 21) + " Someone is Present!<br>");
