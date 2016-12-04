@@ -33,12 +33,12 @@ function validateIP() {
 
             //Attach a 'connected' event handler to the socket
             socket.on("connected", function (message) {
-                navigator.notification.alert(
-                    'Welcome',  // message
-                    "",                     // callback
-                    'Hi There!',            // title
-                    'Ok'                  // buttonName
-                );
+//                navigator.notification.alert(
+//                    'Welcome',  // message
+//                    "",                     // callback
+//                    'Hi There!',            // title
+//                    'Ok'                  // buttonName
+//                );
             });
 
             //Set all Back button to not show
@@ -46,24 +46,26 @@ function validateIP() {
             //Load page with transition
             $.ui.loadContent("#main", false, false, "fade");
 
-            socket.on("message", function (message) {
+            socket.on("foodAdded", function (message) {
                 //alert("Is anyone there? "+message);
-                if (message === "present") {
-                    $("#notifier_circle").attr("class", "green");
-                    //Update log
-                    $("#feedback_log").append(Date().substr(0, 21) + " Someone is Present!<br>");
-                    //Prompt user with Cordova notification alert
-                    navigator.notification.alert(
-                        'Someone is Present!',  // message
-                        "",                     // callback
-                        'Check Your Door',            // title
-                        'Ok'                  // buttonName
-                    );
-                    //Wait 2 seconds then turn back to gray
-                    setTimeout(function () {
-                        $("#notifier_circle").attr("class", "gray");
-                    }, 3000);
-                }
+//                if (message === "present") {
+                    $('#name').html(message.name);
+                    $('#dateAdded').html(message.dateAdded);
+//                    $("#notifier_circle").attr("class", "green");
+//                    //Update log
+//                    $("#feedback_log").append(Date().substr(0, 21) + " Someone is Present!<br>");
+//                    //Prompt user with Cordova notification alert
+//                    navigator.notification.alert(
+//                        'Someone is Present!',  // message
+//                        "",                     // callback
+//                        'Check Your Door',            // title
+//                        'Ok'                  // buttonName
+//                    );
+//                    //Wait 2 seconds then turn back to gray
+//                    setTimeout(function () {
+//                        $("#notifier_circle").attr("class", "gray");
+//                    }, 3000);
+//                }
             });
         } catch (e) {
             navigator.notification.alert(

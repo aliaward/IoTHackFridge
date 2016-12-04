@@ -26,10 +26,10 @@ var Food = function(name){
     this.dateAdded;
     this.open = false;
     this.daysOpened = 0;
-    this.name = 'milk';
+    this.name = name;
 }
 
-var milk = new Food();
+var milk = new Food('milk');
 
 //Begin LED Snippet
 /*
@@ -98,7 +98,8 @@ function startSensorWatch(socket) {
     digital_pin_D6.dir(mraa.DIR_OUT);
 
     digital_pin_D6.write(0);
-
+    
+    
     setInterval(function () {
         touch_sensor_value = digital_pin_D2.read();
         if (touch_sensor_value === 1 && last_t_sensor_value === 0) {
@@ -111,7 +112,6 @@ function startSensorWatch(socket) {
             digital_pin_D6.write(touch_sensor_value);
         }
         last_t_sensor_value = touch_sensor_value;
-        
         //Temperature sensor
         var a = myAnalogPin.read();
         console.log("Analog Pin (A0) Output: " + a);
@@ -123,13 +123,16 @@ function startSensorWatch(socket) {
         //console.log("Celsius Temperature "+celsius_temperature); 
         var fahrenheit_temperature = (celsius_temperature * (9 / 5)) + 32;
         
-        if (fahrenheit_temperature > 70){
+        if (fahrenheit_temperature > 60){
             milk.dateAdded = Date.now();
             console.log(milk);
         };
         console.log("Fahrenheit Temperature: " + fahrenheit_temperature);
-        socket.emit("message", fahrenheit_temperature);
+        socket.emit("foodAdded", milk);
+        
     }, 500);
+    
+    
 }
 
 
