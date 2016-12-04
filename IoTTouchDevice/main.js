@@ -231,8 +231,8 @@ function startTempWatch(socket) {
     }
     if (inFridge() && !milk){
         milk = new Food('milk');
-        milk.dateAdded = Date.now();
         milk.updateExpiration();
+        milk.updateDates();
         console.log(milk);
         socket.emit("foodAdded", milk);
     } else if (outOfFridge() && milk.status){

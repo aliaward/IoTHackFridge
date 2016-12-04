@@ -67,9 +67,9 @@ function validateIP() {
                 $('.no-food-message').addClass('hidden');
                 console.log(message);
                 $('#name').html(message.name);
-                $('#dateAdded').html(formatDate(message.dateAdded));
+                $('#dateAdded').html(message.dateAddedStr);
                 $('#status').html(message.status);
-                $('#daysToUse').html(daysLeft(message.expiration));
+                $('#daysToUse').html(message.daysLeft);
             });
             
             socket.on("foodUpdated", function (message) {
