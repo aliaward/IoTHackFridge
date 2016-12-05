@@ -80,6 +80,8 @@ function validateIP() {
                    $('.alert-danger').removeClass('hidden');
                    $('#expiredName').html(message.name);
                }
+                $('#status').html(message.status);
+                $('#daysToUse').html(message.daysLeft);
             });
         } catch (e) {
             navigator.notification.alert(
